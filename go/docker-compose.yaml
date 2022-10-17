@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  codeeducation:
+    build:
+      context: ./go
+      dockerfile: dockerfile.prd
+    image: domrafael/codeeducation:latest
+    container_name: codeeducation
+    networks:
+      - codeeducation
+
+networks:
+  codeeducation:
+    driver: bridge

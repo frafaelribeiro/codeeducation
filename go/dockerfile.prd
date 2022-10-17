@@ -1,0 +1,18 @@
+FROM golang:1.19-alpine3.16 AS builder
+
+WORKDIR /app
+
+COPY go.mod .
+COPY hello-world.go .
+
+RUN go mod download && \
+  go build hello-world.go
+
+
+FROM scratch
+
+WORKDIR /app
+
+COPY --from=builder /app/hello-world .
+
+CMD [ "./hello-world" ]
