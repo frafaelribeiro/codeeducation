@@ -13,7 +13,7 @@ Meus códigos no aprendizado de docker.
         `docker compose -f ./go/docker-compose.yaml logs codeeducation`  
 
 - nginx_com_node  
-    - Executando o docker compose criar uma stack com um app node.js que cria uma tabela e insere um nome a cada requisição no banco Mysql usando um Nginx como proxy reverso.  
+    - Executando o docker compose inicia uma stack com um app Node.js que cria uma tabela e insere um nome a cada requisição no banco Mysql usando um Nginx como proxy reverso.  
         `docker compose -f ./nginx_com_node/docker-compose.yml up -d`  
     - O acesso é pela url:  
         [http://localhost:8080/](http://localhost:8080/)  
