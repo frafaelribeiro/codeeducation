@@ -4,15 +4,21 @@ services:
   app:
     build:
       context: ./nginx_com_node/
-      dockerfile: Dockerfile-node.dev
+      dockerfile: Dockerfile-node
+      tags:
+        - "domrafael/nginx_com_node-app"
     container_name: app
-    # entrypoint: dockerize --wait tcp://db:3306 --timeout 20s docker-entrypoint.sh
+    entrypoint: | 
+      dockerize --wait tcp://db:3306 
+      --timeout 20s 
+      docker-entrypoint.sh 
+      npm start 
     networks:
       - net-app
-    volumes:
-      - type: bind
-        source: ./node
-        target: /usr/src/app
+    # volumes:
+    #   - type: bind
+    #     source: ./node
+    #     target: /usr/src/app
     tty: true
     # ports:
     #   - '3000:3000'
@@ -23,12 +29,14 @@ services:
     build:
       context: ./nginx_com_node/
       dockerfile: Dockerfile-nginx
+      tags:
+        - "domrafael/nginx_com_node-nginx"
     container_name: nginx
-    # entrypoint: | 
-    #   dockerize --wait http://app:3000
-    #   --timeout 20s 
-    #   /docker-entrypoint.sh 
-    #   nginx -g 'daemon off;' 
+    entrypoint: | 
+      dockerize --wait http://app:3000
+      --timeout 20s 
+      /docker-entrypoint.sh 
+      nginx -g 'daemon off;' 
     networks:
       - net-app
     tty: true
@@ -40,7 +48,9 @@ services:
 
   db:
     image: mysql:8
-    command: --default-authentication-plugin=mysql_native_password --innodb-use-native-aio=0
+    command: | 
+      --default-authentication-plugin=mysql_native_password 
+      --innodb-use-native-aio=0
     container_name: db
     restart: always
     tty: true

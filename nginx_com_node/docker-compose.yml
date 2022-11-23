@@ -2,9 +2,10 @@ version: '3'
 
 services:
   app:
-    build:
-      context: ./nginx_com_node/
-      dockerfile: Dockerfile-node
+    # build:
+    #   context: ./nginx_com_node/
+    #   dockerfile: Dockerfile-node
+    image: domrafael/nginx_com_node-app
     container_name: app
     entrypoint: | 
       dockerize --wait tcp://db:3306 
@@ -13,20 +14,15 @@ services:
       npm start 
     networks:
       - net-app
-    volumes:
-      - type: bind
-        source: ./node
-        target: /usr/src/app
     tty: true
-    # ports:
-    #   - '3000:3000'
     depends_on:
       - db
 
   nginx:
-    build:
-      context: ./nginx_com_node/
-      dockerfile: Dockerfile-nginx
+    # build:
+    #   context: ./nginx_com_node/
+    #   dockerfile: Dockerfile-nginx
+    image: domrafael/nginx_com_node-nginx
     container_name: nginx
     entrypoint: | 
       dockerize --wait http://app:3000
@@ -51,9 +47,6 @@ services:
     restart: always
     tty: true
     volumes:
-      # - type: bind
-      #   source: ./mysql
-      #   target: /var/lib/mysql
       - type: volume
         source: db-data
         target: /var/lib/mysql
