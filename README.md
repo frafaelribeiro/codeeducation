@@ -1,6 +1,6 @@
 # Aprendendo docker
 
-Meus códigos no aprendizado de docker.  
+Meus códigos no aprendizado do docker.  
 
 - go  
     - Executado um container que imprime uma saida simples de texto.  
